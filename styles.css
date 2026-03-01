@@ -597,6 +597,11 @@ progress {
   content: "— ";
 }
 
+#jalkanen {
+  background: #1D809F;
+  background: linear-gradient(360deg, rgba(29, 128, 159, 1) 0%, rgba(179, 237, 255, 1) 61%, rgba(255, 255, 255, 1) 100%);
+}
+
 .img-fluid {
   max-width: 100%;
   height: auto;
@@ -4521,6 +4526,11 @@ textarea.form-control-lg {
   display: flex;
   padding-left: 0;
   list-style: none;
+}
+
+.teretulemast {
+  background: #1D809F;
+  background: linear-gradient(180deg, rgba(29, 128, 159, 1) 0%, rgba(179, 237, 255, 1) 61%, rgba(255, 255, 255, 1) 100%);
 }
 
 .page-link {
