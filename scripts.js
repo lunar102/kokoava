@@ -170,32 +170,51 @@ document.getElementById('fetchCharacters').onclick = async function(event) {
     }
 };
 
-document.getElementById('fetchGot').addEventListener('click', function(e) {
-    e.preventDefault();
+// GoT hahmohaku
 
-    const randomPage = Math.floor(Math.random() * 214) + 1;
-    fetch(`https://www.anapioficeandfire.com/api/characters?page=${randomPage}&pageSize=1`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length === 0) {
-                throw new Error("No character found on this page.");
-            }
+document.addEventListener('DOMContentLoaded', function() {
+    const fetchGotButton = document.getElementById('fetchGot');
+    if (!fetchGotButton) {
+        console.error('Button not found!');
+        return;
+    }
 
-            const randomCharacter = data[0];
+    fetchGotButton.onclick = function(e) {
+        e.preventDefault();
+        const gotListDiv = document.getElementById('got-list');
+        if (!gotListDiv) {
+            console.error('got-list div not found!');
+            return;
+        }
+        gotListDiv.innerHTML = '<p>Loading character...</p>';
 
-            const gotListDiv = document.getElementById('got-list');
-            gotListDiv.innerHTML = `
-                <div class="character-card">
-                    <h2>${randomCharacter.name || 'Unknown'}</h2>
-                    <p><strong>Gender:</strong> ${randomCharacter.gender || 'Unknown'}</p>
-                    <p><strong>Culture:</strong> ${randomCharacter.culture || 'Unknown'}</p>
-                    <p><strong>Born:</strong> ${randomCharacter.born || 'Unknown'}</p>
-                    <p><strong>Titles:</strong> ${randomCharacter.titles ? randomCharacter.titles.join(', ') : 'None'}</p>
-                </div>
-            `;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('got-list').innerHTML = '<p>Failed to fetch character. Please try again.</p>';
-        });
+        // Fetch characters from ThronesApi
+        fetch('https://thronesapi.com/api/v2/Characters')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(characters => {
+                console.log('Characters list:', characters);
+
+                // Pick a random character
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                const randomCharacter = characters[randomIndex];
+
+                gotListDiv.innerHTML = `
+                    <div class="character-card">
+                        <h2>${randomCharacter.fullName || 'Unknown'}</h2>
+                        <p><strong>Title:</strong> ${randomCharacter.title || 'None'}</p>
+                        <p><strong>Family:</strong> ${randomCharacter.family || 'Unknown'}</p>
+                        <img src="${randomCharacter.imageUrl}" alt="${randomCharacter.fullName}" style="max-width: 200px;">
+                    </div>
+                `;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                gotListDiv.innerHTML = `<p>Error: ${error.message}. Please try again.</p>`;
+            });
+    };
 });
