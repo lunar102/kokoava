@@ -169,3 +169,33 @@ document.getElementById('fetchCharacters').onclick = async function(event) {
         charactersList.innerHTML = '<p>Failed to load characters. Check console for details.</p>';
     }
 };
+
+document.getElementById('fetchGot').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const randomPage = Math.floor(Math.random() * 214) + 1;
+    fetch(`https://www.anapioficeandfire.com/api/characters?page=${randomPage}&pageSize=1`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length === 0) {
+                throw new Error("No character found on this page.");
+            }
+
+            const randomCharacter = data[0];
+
+            const gotListDiv = document.getElementById('got-list');
+            gotListDiv.innerHTML = `
+                <div class="character-card">
+                    <h2>${randomCharacter.name || 'Unknown'}</h2>
+                    <p><strong>Gender:</strong> ${randomCharacter.gender || 'Unknown'}</p>
+                    <p><strong>Culture:</strong> ${randomCharacter.culture || 'Unknown'}</p>
+                    <p><strong>Born:</strong> ${randomCharacter.born || 'Unknown'}</p>
+                    <p><strong>Titles:</strong> ${randomCharacter.titles ? randomCharacter.titles.join(', ') : 'None'}</p>
+                </div>
+            `;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('got-list').innerHTML = '<p>Failed to fetch character. Please try again.</p>';
+        });
+});

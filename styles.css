@@ -3943,11 +3943,6 @@ textarea.form-control-lg {
   background: linear-gradient(180deg, rgba(29, 128, 159, 1) 0%, rgba(179, 237, 255, 1) 61%, rgba(255, 255, 255, 1) 100%);
 }
 
-.burgerihaku {
-  background: #1D809F;
-  background: linear-gradient(180deg, rgba(29, 128, 159, 1) 0%, rgba(179, 237, 255, 1) 61%, rgba(255, 255, 255, 1) 100%);
-}
-
 .page-link {
   position: relative;
   display: block;
@@ -10364,15 +10359,16 @@ footer.footer {
   border: 15px white solid;
   border-radius: 30px;
   margin-top: 30px;
-  width: 100%;
-  height: auto;
-  max-height: 500px;
-  padding: 50px 30px 40px 30px;
+  width: auto;
+  height: 400px;
+  padding: 30px;
   font-family: "Single Day";
   background-color: #212121;
   color: #fff;
-  display: inline-block;
-  vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .single-day-regular {
@@ -10383,36 +10379,52 @@ footer.footer {
 
 #taulu {
   background-color: #212121;
+  height: 300px;
 }
 
 #characters-list {
-  padding-top: 50px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 20px;
+  padding: 40px 20px 20px 20px;
   text-wrap: wrap;
 }
 
 .character {
-    background: white;
-    padding: 15px 25px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex: 0 0 calc(30% - 20px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  background: white;
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-shadow: grey 5px 5px 5px;
+  flex: 0 0 calc(30% - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .hahmohaku {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-top: 20px;
 }
 
-#characters-list img {
+.hahmohaku img {
+  max-width: 100px;
+  max-height: 100px;
+}
 
+.burgerihaku {
+  display: flex;
+  align-items: center;
+  background: #1D809F;
+  background: linear-gradient(180deg, rgba(29, 128, 159, 1) 0%, rgba(179, 237, 255, 1) 61%, rgba(255, 255, 255, 1) 100%);
+}
+
+.tvmovies {
+  background: #1D809F;
+  background: linear-gradient(180deg, rgba(29, 128, 159, 1) 0%, rgba(179, 237, 255, 1) 61%, rgba(255, 255, 255, 1) 100%);
 }
