@@ -3,18 +3,21 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <title>Kokoava tehtävä</title>
+        <meta name="description" content="A summarizing task in Bootstrap and using templates.">
+        <title>Bob's Burgers</title>
         <!-- favicon -->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
         <!-- font awesome icons -->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- icons -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" rel="stylesheet">
         <!-- google fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
         <!-- core theme js -->
-        <link href="styles.css" rel="stylesheet" />
+        <link href="styles.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
     </head>
 
     <body id="page-top">
@@ -22,26 +25,45 @@
         <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
         <nav id="sidebar-wrapper">
             <ul class="sidebar-nav">
-                <li class="sidebar-brand"><a href="#page-top">Front page</a></li>
-                <li class="sidebar-nav-item"><a href="#thumbs">TV and movies</a></li>
-                <li class="sidebar-nav-item"><a href="#about">Animals</a></li>
+                <li class="sidebar-brand"><a href="index.html">Front page</a></li>
+                <li class="sidebar-nav-item"><a href="tv.html">TV and movies</a></li>
+                <li class="sidebar-nav-item"><a href="books.html">Books</a></li>
             </ul>
         </nav>
-        <!-- header -->
-        <header class="masthead d-flex align-items-center" id="#page-top">
-            <div class="container px-4 px-lg-5 text-center">
-                <h1 class="mb-1">Welcome!</h1>
-                <h3 class="mb-5"><em>Inconsequential things I'm interested in.</em></h3>
-                <a class="btn btn-primary btn-xl" href="#thumbs">Take a look</a>
+
+        <!-- burger search -->
+        <div class="burgerihaku">
+            <header class="masthead d-flex align-items-center" id="#page-top">
+                <div class="container px-4 px-lg-5 text-center">
+                    <h1 class="mb-1">Bob's Burgers</h1>
+                    <h3 class="mb-5"><em>(2011 -)<br>Comedy, animation</em></h3>
+                    <a class="btn btn-primary btn-xl" href="#brgrs" id="fetchBurgers">Get a <em>Burger of the Day</em>!</a>
+                    <div id="burgers-list">
+                        <script src="scripts.js"></script>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="hahmohaku">
+                <header class="masthead d-flex align-items-center">
+                    <div class="container px-4 px-lg-5 text-center">
+                        <a class="btn btn-primary btn-xl" href="#characters" id="fetchCharacters">Get a <em>Bob's Burgers character</em>!</a>
+                        <div id="characters-list">
+                            <script src="scripts.js"></script>
+                        </div>
+                    </div>
+                </header>
             </div>
-        </header> 
-        
+        </div>
+
         <!-- footer -->
-        <footer class="footer text-center">
+        <footer class="footer text-center" id="jalkanen">
             <div class="container px-4 px-lg-5">
-                
+                <p>A summarizing task in HTML + CSS, Bootstrap, and JSON.<br>
+                Free Bootstrap theme by Start Bootstrap (startbootstrap.com)</p>
             </div>
         </footer>
+
         <!-- scroll to top -->
         <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
         <!-- bootstrap core js -->
