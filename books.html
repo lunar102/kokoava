@@ -34,18 +34,18 @@
             <div class="container px-4 px-lg-5 text-center">
                 <h1 class="mb-1">Books</h1>
                 <h3 class="mb-5"><em>These are some great books<br>that have had an impact on me</em></h3>
-                <a class="btn btn-primary btn-xl" href="#thumbs">Take a look</a>
+                <a class="btn btn-primary btn-xl" href="#books">Take a look</a>
             </div>
         </header>
         </div>
 
         <!-- thumbnails -->
-        <div class="container" id="thumbs">
+        <div class="container" id="books">
             <p>Click on the image or title for API info.</p>
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="thumbnail">
-                            <a href="bobs.html">
+                        <div class="books">
+                            <a href="#blank">
                             <img src="bobs1.jpg" alt="Bob's burgers cover." style="width:100%">
                             <div class="caption">
                                 <p style="padding-top: 20px;">Bob's Burgers (2011 -)</p>
@@ -78,6 +78,64 @@
                     </div>
                 </div>
         </div>
+
+        <h1>Fetch Book Info from Open Library</h1>
+        <input type="text" id="bookTitle" placeholder="Enter book title">
+        <button id="fetchInfo">Get Book Info</button>
+        <div id="bookInfo"></div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const fetchInfoButton = document.getElementById('fetchInfo');
+                const bookTitleInput = document.getElementById('bookTitle');
+                const bookInfoDiv = document.getElementById('bookInfo');
+
+                fetchInfoButton.addEventListener('click', function() {
+                    const bookTitle = bookTitleInput.value.trim();
+                    if (!bookTitle) {
+                        bookInfoDiv.innerHTML = '<p>Please enter a book title.</p>';
+                        return;
+                    }
+
+                    bookInfoDiv.innerHTML = '<p>Loading...</p>';
+
+                    fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(bookTitle)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.docs && data.docs.length > 0) {
+                                const book = data.docs[0];
+                                const coverId = book.cover_i;
+                                const title = book.title;
+                                const author = book.author_name ? book.author_name.join(', ') : 'Unknown';
+                                const firstPublishYear = book.first_publish_year || 'Unknown';
+                                const subject = book.subject ? book.subject.join(', ') : 'No subjects listed';
+
+                                let bookHtml = `
+                                    <h2>${title}</h2>
+                                    <p><strong>Author:</strong> ${author}</p>
+                                    <p><strong>First Published:</strong> ${firstPublishYear}</p>
+                                    <p><strong>Subjects:</strong> ${subject}</p>
+                                `;
+
+                                if (coverId) {
+                                    const coverUrl = `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`;
+                                    bookHtml += `<img src="${coverUrl}" alt="${title}">`;
+                                } else {
+                                    bookHtml += '<p>No cover available.</p>';
+                                }
+
+                                bookInfoDiv.innerHTML = bookHtml;
+                            } else {
+                                bookInfoDiv.innerHTML = '<p>No results found.</p>';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            bookInfoDiv.innerHTML = '<p>Error fetching data.</p>';
+                        });
+                });
+            });
+        </script>
 
         <!-- footer -->
         <footer class="footer text-center" id="jalkanen">

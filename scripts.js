@@ -170,51 +170,54 @@ document.getElementById('fetchCharacters').onclick = async function(event) {
     }
 };
 
-// GoT hahmohaku
-
+// kirjahaku
 document.addEventListener('DOMContentLoaded', function() {
-    const fetchGotButton = document.getElementById('fetchGot');
-    if (!fetchGotButton) {
-        console.error('Button not found!');
-        return;
-    }
+    const fetchInfoButton = document.getElementById('fetchInfo');
+    const bookTitleInput = document.getElementById('bookTitle');
+    const bookInfoDiv = document.getElementById('bookInfo');
 
-    fetchGotButton.onclick = function(e) {
-        e.preventDefault();
-        const gotListDiv = document.getElementById('got-list');
-        if (!gotListDiv) {
-            console.error('got-list div not found!');
+    fetchInfoButton.addEventListener('click', function() {
+        const bookTitle = bookTitleInput.value.trim();
+        if (!bookTitle) {
+            bookInfoDiv.innerHTML = '<p>Please enter a book title.</p>';
             return;
         }
-        gotListDiv.innerHTML = '<p>Loading character...</p>';
 
-        // Fetch characters from ThronesApi
-        fetch('https://thronesapi.com/api/v2/Characters')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+        bookInfoDiv.innerHTML = '<p>Loading...</p>';
+
+        fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(bookTitle)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.docs && data.docs.length > 0) {
+                    const book = data.docs[0];
+                    const coverId = book.cover_i;
+                    const title = book.title;
+                    const author = book.author_name ? book.author_name.join(', ') : 'Unknown';
+                    const firstPublishYear = book.first_publish_year || 'Unknown';
+                    const subject = book.subject ? book.subject.join(', ') : 'No subjects listed';
+
+                    let bookHtml = `
+                        <h2>${title}</h2>
+                        <p><strong>Author:</strong> ${author}</p>
+                        <p><strong>First Published:</strong> ${firstPublishYear}</p>
+                        <p><strong>Subjects:</strong> ${subject}</p>
+                    `;
+
+                    if (coverId) {
+                        const coverUrl = `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`;
+                        bookHtml += `<img src="${coverUrl}" alt="${title}">`;
+                    } else {
+                        bookHtml += '<p>No cover available.</p>';
+                    }
+
+                    bookInfoDiv.innerHTML = bookHtml;
+                } else {
+                    bookInfoDiv.innerHTML = '<p>No results found.</p>';
                 }
-                return response.json();
-            })
-            .then(characters => {
-                console.log('Characters list:', characters);
-
-                // Pick a random character
-                const randomIndex = Math.floor(Math.random() * characters.length);
-                const randomCharacter = characters[randomIndex];
-
-                gotListDiv.innerHTML = `
-                    <div class="character-card">
-                        <h2>${randomCharacter.fullName || 'Unknown'}</h2>
-                        <p><strong>Title:</strong> ${randomCharacter.title || 'None'}</p>
-                        <p><strong>Family:</strong> ${randomCharacter.family || 'Unknown'}</p>
-                        <img src="${randomCharacter.imageUrl}" alt="${randomCharacter.fullName}" style="max-width: 200px;">
-                    </div>
-                `;
             })
             .catch(error => {
                 console.error('Error:', error);
-                gotListDiv.innerHTML = `<p>Error: ${error.message}. Please try again.</p>`;
+                bookInfoDiv.innerHTML = '<p>Error fetching data.</p>';
             });
-    };
+    });
 });
