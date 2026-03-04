@@ -3959,6 +3959,10 @@ textarea.form-control-lg {
     transition: none;
   }
 }
+#page-top {
+  height: auto;
+  width: auto;
+}
 .page-link:hover {
   z-index: 2;
   color: var(--bs-pagination-hover-color);
@@ -10410,6 +10414,7 @@ footer.footer {
   align-items: center;
   width: 100%;
   padding-top: 20px;
+  margin-top: 40px;
 }
 
 .hahmohaku img {
@@ -10432,4 +10437,56 @@ footer.footer {
 .gothaku {
   background: #1D809F;
   background: linear-gradient(180deg, rgba(29, 128, 159, 1) 0%, rgba(179, 237, 255, 1) 61%, rgba(255, 255, 255, 1) 100%);
+}
+
+#faveBook {
+  display: flex;
+  flex-direction: column;
+  font-style: #000;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  min-height: 100px;
+}
+
+#faveBook img {
+  max-width: 150px;
+  margin: 10px 0;
+}
+
+#bookInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50%;
+}
+
+#kirjahaku {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hakunappi {
+  border: #fff 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 40px;
+}
+
+#hakuOtsikko {
+  font-size: 40px;
+  padding-bottom: 20px;
+}
+
+#bookTitle {
+  margin: 20px;
+}
+
+#fetchInfo {
+  margin-top: 10px;
+  margin-bottom: 40px;
 }

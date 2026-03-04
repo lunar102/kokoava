@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
         <meta name="description" content="">
         <title>Books</title>
         <!-- favicon -->
@@ -33,56 +33,20 @@
         <header class="masthead d-flex align-items-center" id="#page-top">
             <div class="container px-4 px-lg-5 text-center">
                 <h1 class="mb-1">Books</h1>
-                <h3 class="mb-5"><em>These are some great books<br>that have had an impact on me</em></h3>
-                <a class="btn btn-primary btn-xl" href="#books">Take a look</a>
+                <h4 class="mb-5"><em>These are some great books<br>that have had an impact on me.
+                <br>Check the book search below<br>to look up info on your favourite titles!</em></h4>
+                <button class="hakunappi"><a href="#kirjahaku">Move to book search</a></button>
+                <div id="faveBook"></div>
             </div>
         </header>
         </div>
 
-        <!-- thumbnails -->
-        <div class="container" id="books">
-            <p>Click on the image or title for API info.</p>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="books">
-                            <a href="#blank">
-                            <img src="bobs1.jpg" alt="Bob's burgers cover." style="width:100%">
-                            <div class="caption">
-                                <p style="padding-top: 20px;">Bob's Burgers (2011 -)</p>
-                            </div>
-                            </a>
-                            <p>H. Jon Benjamin, Kristen Schaal, Dan Mintz...</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="thumbnail">
-                            <a href="got.html">
-                            <img src="got1.jpg" alt="Game of Thrones cover." style="width:100%">
-                            <div class="caption">
-                                <p style="padding-top: 20px;">Game of Thrones (2011 - 2019)</p>
-                            </div>
-                            </a>
-                            <p>Emilia Clarke, Sophie Turner, Kit Harington...</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="thumbnail">
-                            <a href="hp.html">
-                            <img src="hp1.jpg" alt="Harry Potter Prisoner of Azkaban cover." style="width:100%">
-                            <div class="caption">
-                                <p style="padding-top: 20px;">Harry Potter (2001 - 2011)</p>
-                            </div>
-                            </a>
-                            <p>Daniel Radcliffe, Emma Watson, Rupert Grint...</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="kirjahaku" id="kirjahaku">
+            <h1>Fetch Book Info from Open Library</h1>
+            <input type="text" id="bookTitle" placeholder="Enter book title">
+            <button id="fetchInfo">Get Book Info</button>
+            <div id="bookInfo"></div>
         </div>
-
-        <h1>Fetch Book Info from Open Library</h1>
-        <input type="text" id="bookTitle" placeholder="Enter book title">
-        <button id="fetchInfo">Get Book Info</button>
-        <div id="bookInfo"></div>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -135,6 +99,37 @@
                         });
                 });
             });
+
+            //fave-haku
+            fetch('books.JSON')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(books) {
+                    displayBooks(books);
+                })
+                .catch(function(error) {
+                    document.getElementById("faveBook").innerHTML = "<p class='error'>Failed to fetch book information.</p>";
+                });
+
+            function displayBooks(books) {
+                let bookInfo = "<h1 id='hakuOtsikko'><em>My Favorite Books</em></h1><br>";
+
+                books.forEach(book => {
+                    bookInfo += `
+                        <div class="book">
+                            <h2>${book.title}</h2>
+                            <p><strong>Author:</strong> ${book.author}</p>
+                            <p><strong>Year:</strong> ${book.year}</p>
+                            <p><strong>Genre:</strong> ${book.genre}</p>
+                            <p>${book.description}</p>
+                            <img src="${book.cover}" alt="${book.title} cover" style="max-width: 150px; margin: 10px 0;">
+                            <hr>
+                        </div>
+                    `;
+                });
+                document.getElementById("faveBook").innerHTML = bookInfo;
+            }
         </script>
 
         <!-- footer -->
