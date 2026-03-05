@@ -33,17 +33,59 @@
             <div class="container px-4 px-lg-5 text-center">
                 <h1 class="mb-1">Harry Potter</h1>
                 <h3 class="mb-5"><em>Some nostalgia for you!</em></h3>
+                <img class="cloud" src="cloud.png" alt="A realistic looking cloud">
             </div>
         </header>
 
         <!-- spell search -->
         <div class="taikahaku" id="taikahaku">
             <div class="container px-4 px-lg-5 text-center">
-                <h1 class="mb-1">Spell Search</h1>
+                <h1 class="mb-1" id="spellHead">Spell Search</h1>
                 <button class="btn btn-primary btn-xl" id="fetchSpell">Get a random <em>spell</em>!</button>
                 <div class="container px-4 px-lg-5 text-center" id="spell"></div>
             </div>
         </div>
+
+        <script>
+            async function fetchRandomSpell() {
+                try {
+                    const response = await fetch('spells.json');
+                    if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const spells = await response.json();
+
+                    if (spells.length === 0) {
+                    document.getElementById('spell').innerHTML = "No spells found!";
+                    return;
+                    }
+
+                    // random spell
+                    const randomIndex = Math.floor(Math.random() * spells.length);
+                    const randomSpell = spells[randomIndex];
+
+                    // display spell
+                    document.getElementById('spell').innerHTML = `
+                    <h2>${randomSpell.name || 'Unknown'}</h2>
+                    <p>${randomSpell.description || 'No description available'}</p>
+                    `;
+                } catch (error) {
+                    document.getElementById('spell').innerHTML = `Error: ${error.message}`;
+                }
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                const fetchSpellButton = document.getElementById('fetchSpell');
+                if (fetchSpellButton) {
+                    fetchSpellButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    fetchRandomSpell();
+                    });
+                } else {
+                    console.error('Button with ID "fetchSpell" not found.');
+                }
+            });
+        </script>
         
         <!-- footer -->
         <footer class="footer text-center" id="jalkanen">

@@ -9706,6 +9706,14 @@ footer.footer {
 }
 
 #spell {
-  margin-top: 40px;
+  margin-top: 20px;
   padding: 20px;
+}
+
+#spellHead {
+  padding-bottom: 30px;
+}
+
+.cloud {
+  width: 400px;
 }
