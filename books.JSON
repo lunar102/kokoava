@@ -30,5 +30,13 @@
     "genre": "Detective novel",
     "description": "A psychological thriller/detective novel.",
     "cover": "https://covers.openlibrary.org/b/id/14598725-L.jpg"
+  },
+  {
+    "title": "Sinuhe Egyptiläinen",
+    "author": "Mika Waltari",
+    "year": 1945,
+    "genre": "Historical fiction",
+    "description": "A historical fiction novel.",
+    "cover": "https://covers.openlibrary.org/b/id/6605516-L.jpg"
   }
 ]

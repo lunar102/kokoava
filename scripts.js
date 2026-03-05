@@ -146,7 +146,7 @@ document.getElementById('fetchCharacters').onclick = async function(event) {
         for (const id of characterIds) {
             const response = await fetch(`https://bobsburgers-api.herokuapp.com/characters/${id}`);
             if (!response.ok) {
-                console.warn(`Failed to fetch character with ID ${id}, trying another ID...`);
+                console.warn(`Failed to fetch character with ID ${id}, trying another...`);
                 continue;
             }
             const character = await response.json();
@@ -169,3 +169,42 @@ document.getElementById('fetchCharacters').onclick = async function(event) {
         charactersList.innerHTML = '<p>Failed to load characters. Check console for details.</p>';
     }
 };
+
+// Function to fetch and display a random spell from local JSON
+async function fetchRandomSpell() {
+  try {
+    // Fetch the local JSON file
+    const response = await fetch('spells.json'); // Replace with your file path if needed
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const spells = await response.json();
+
+    if (spells.length === 0) {
+      document.getElementById('spell').innerHTML = "No spells found!";
+      return;
+    }
+
+    // Pick a random spell
+    const randomIndex = Math.floor(Math.random() * spells.length);
+    const randomSpell = spells[randomIndex];
+
+    // Display the spell
+    document.getElementById('spell').innerHTML = `
+      <h2>${randomSpell.name || 'Unknown'}</h2>
+      <p>${randomSpell.description || 'No description available'}</p>
+    `;
+  } catch (error) {
+    document.getElementById('spell').innerHTML = `Error: ${error.message}`;
+  }
+}
+
+// Add event listener to the button after DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  const fetchSpellButton = document.getElementById('fetchSpell');
+  if (fetchSpellButton) {
+    fetchSpellButton.addEventListener('click', fetchRandomSpell);
+  } else {
+    console.error('Button with ID "fetchSpell" not found!');
+  }
+});
