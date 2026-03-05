@@ -9717,3 +9717,8 @@ footer.footer {
 .cloud {
   width: 400px;
 }
+
+.kirjahaku label {
+  text-align: center;
+  padding: 20px 0px 20px 0px;
+}
